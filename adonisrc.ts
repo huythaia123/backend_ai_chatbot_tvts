@@ -83,4 +83,6 @@ export default defineConfig({
     ],
     forceExit: false,
   },
+
+  directories: { helpers: 'app/helpers' },
 })

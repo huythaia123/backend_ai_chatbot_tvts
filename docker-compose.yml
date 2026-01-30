@@ -5,12 +5,12 @@ services:
     restart: unless-stopped
 
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:5432'
 
     environment:
-      POSTGRES_DB: app_chatbot_ai
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     volumes:
-      - ./db_data_docker:/var/lib/postgresql/data
+      - ${POSTGRES_VOLUMES}:/var/lib/postgresql/data
