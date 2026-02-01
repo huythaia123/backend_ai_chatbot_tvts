@@ -1,11 +1,11 @@
-import Document from '#models/document'
-import DataResponse from '#helpers/data_response'
-import { deleteDocumentValidator, uploadDocumentsValidator } from '#validators/document'
-import app from '@adonisjs/core/services/app'
-import type { HttpContext } from '@adonisjs/core/http'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
+import { type HttpContext } from '@adonisjs/core/http'
 import { createReadStream, unlinkSync } from 'node:fs'
+import { deleteDocumentValidator, uploadDocumentsValidator } from '#validators/document'
+import app from '@adonisjs/core/services/app'
+import Document from '#models/document'
+import DataResponse from '#helpers/data_response'
 
 export default class DocumentsController {
   private STORAGE_DOCUMENTS_PATH = 'storage/documents'
@@ -21,8 +21,13 @@ export default class DocumentsController {
     })
   }
 
-  async index({}: HttpContext) {
-    return await Document.query().orderBy('updated_at', 'desc')
+  async index({ response }: HttpContext) {
+    return response.ok(
+      new DataResponse({
+        message: 'Get documents ok.',
+        data: { documents: await Document.query().orderBy('updated_at', 'desc') },
+      })
+    )
   }
 
   async store({ request, response }: HttpContext) {

@@ -6,16 +6,17 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('source').notNullable() // tên file: quy_che.txt, quy_che_2024.pdf...
-      table.text('content').notNullable() // đoạn text (chunk)
-      /**
-      ALTER TABLE document_embeddings
-      ALTER COLUMN embedding TYPE vector(3072);
-       */
+      table
+        .integer('document_id')
+        .unsigned()
+        .notNullable()
+        .references('documents.id')
+        .onDelete('cascade')
+      table.integer('chunk_index').notNullable()
+      table.text('chunk_content').notNullable() // đoạn text (chunk)
+      table.jsonb('chunk_metadata').notNullable()
       table.specificType('embedding', 'vector(768)')
-      table.integer('chunk_index').nullable()
-      table.integer('token_count').nullable()
-      table.jsonb('chunk_metadata')
+      table.integer('token_count')
       table.timestamps(true)
     })
 
