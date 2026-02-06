@@ -83,7 +83,19 @@ export default class DocumentsController {
     )
   }
 
-  // async show({ params }: HttpContext) {}
+  async show({ params, response }: HttpContext) {
+    const document = await Document.find(params.id)
+
+    if (!document) return response.notFound(new DataResponse({ message: 'Document nf.' }))
+
+    await document.load('documentEmbeddings', (query) => {
+      query
+        .select('id', 'chunkContent', query.client.raw(`embedding IS NOT NULL as embedding`))
+        .orderBy('id')
+    })
+
+    return response.ok(new DataResponse({ message: 'Get detail document ok.', data: { document } }))
+  }
 
   async destroy({ request, response }: HttpContext) {
     const { ids } = await request.validateUsing(deleteDocumentValidator)

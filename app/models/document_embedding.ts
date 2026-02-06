@@ -22,9 +22,6 @@ export default class DocumentEmbedding extends BaseModel {
   @column()
   declare embedding: string // vector(768) – pgvector // lưu dưới dạng array number trong code
 
-  @column({ columnName: 'token_count' })
-  declare tokenCount: number | null
-
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

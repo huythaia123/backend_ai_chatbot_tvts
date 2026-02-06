@@ -16,7 +16,7 @@ export default class extends BaseSchema {
       table.text('chunk_content').notNullable() // đoạn text (chunk)
       table.jsonb('chunk_metadata').notNullable()
       table.specificType('embedding', 'vector(768)')
-      table.integer('token_count')
+      // table.integer('token_count')
       table.timestamps(true)
     })
 

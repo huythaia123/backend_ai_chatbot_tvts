@@ -9,6 +9,8 @@ export default class extends BaseSchema {
       table.string('file_name').notNullable()
       table.string('file_path').notNullable()
       table.string('hash', 64).notNullable().unique() // tránh upload file trùng lặp
+      table.integer('chunk_length')
+      table.integer('count_tokens')
       table.timestamps(true)
     })
   }

@@ -16,6 +16,12 @@ export default class Document extends BaseModel {
   @column({ serializeAs: null })
   declare hash: string
 
+  @column({ columnName: 'chunk_length' })
+  declare chunkLength: number | null
+
+  @column({ columnName: 'count_tokens' })
+  declare countTokens: number | null
+
   // timestamps
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
